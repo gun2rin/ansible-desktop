@@ -1,0 +1,145 @@
+---
+    - name: 'install main packages'
+      apt:
+          pkg: '{{ item }}'
+          state: 'latest'
+
+      with_items:
+          - 'python'
+          - 'python-pip'
+          - 'openjdk-8-jre'
+          - 'fail2ban'
+          - 'supervisor'
+          - 'bc'
+          - 'nano'
+          - 'unzip'
+          - 'curl'
+          - 'wget'
+          - 'whois'
+          - 'apt-transport-https'
+          - 'sqlite3'
+          - 'language-pack-en'
+          - 'language-pack-ru'
+          - 'python-software-properties'
+          - 'software-properties-common'
+          - 'ruby-compass'
+          - 'memcached'
+          - 'sendmail'
+          - 'sendemail'
+          - 'mailutils'
+          - 'ruby'
+          - 'jp2a'
+          - 'mc'
+          - 'gnome-disk-utility'
+      become: yes
+      update_cache: yes 
+    
+    - name: 'add repos'
+      apt_repository:
+         repo: '{{ item }}'
+      with_items:
+             - 'ppa:shutter/ppa'
+             - 'ppa:deluge-team/ppa'
+             - 'ppa:mystic-mirage/komodo-edit'
+             - 'ppa:inkscape.dev/stable'
+             - 'ppa:peek-developers/stable'
+             - 'ppa:otto-kesselgulasch/gimp'
+             - 'ppa:x2go/stable' 
+      become: yes
+      update_cache: yes
+
+    - name: 'repos install'
+      apt:
+        pkg: 'shutter,deluge,komodo-edit,inkscape,peek,gimp,x2goclient,x2goserver-xsession'
+        state: 'latest'     
+      update_cache: yes   
+
+
+    - name: 'install desktop packages'
+      apt:
+         pkg: '{{ item }}'
+         state: 'latest'
+      with_items:
+          - 'chromium-codecs-ffmpeg'
+          - 'ffmpeg'
+          - 'firefox'
+          - 'flashplugin-installer'
+          - 'fonts-ubuntu-font-family-console'
+          - 'freerdp-x11'
+          - 'lame'
+          - 'libdvdread4'
+          - 'mplayer'
+          - 'remmina'
+          - 'remmina-plugin-rdp'
+          - 'remmina-plugin-vnc'
+          - 'ttf-ubuntu-font-family'
+          - 'transmission-gtk'
+          - 'ubuntu-restricted-extras'
+          - 'unrar'
+          - 'vlc'
+          - 'youtube-dl'
+          - 'xtrlock'
+          - 'ppa-purge'
+      update_cache: yes
+    
+     
+    
+    - name: Install skype
+      apt:
+          deb: https://go.skype.com/skypeforlinux-64.deb  
+      
+    - name: 'install server packages'
+      apt:
+         pkg: 'git,git-extras,git-flow,composer,openssh-server'
+         state: 'latest'
+      update_cache: yes
+
+
+     
+      
+    - name: "apt | ensure Google linux signing key present"
+      apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
+    
+    - name: 'apt | ensure Google chrome repo present'
+      apt_repository:
+          repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+          filename: "google-chrome"
+          state: present
+      update_cache: yes  
+    
+    - name: "apt | ensure Google chrome present"
+      apt:
+        name: "google-chrome-stable"
+        state: present  
+
+
+    - name: Install the gpg key for nodejs LTS
+      apt_key:
+        url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+        state: present
+
+    - name: Install the nodejs LTS repos
+      apt_repository:
+        repo: "deb https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
+        state: present
+      update_cache: yes
+      become: yes
+
+    - name: Install the nodejs
+      apt:
+        name: nodejs
+        state: present
+      become: yes
+    
+    - name: 'node packages'
+      npm:
+          name: '{{ item }}'
+          global: yes
+      with_items:
+         - 'bower'
+         - 'uglify-js'
+         - 'gulp'
+         - '@angular/cli'
+      become: yes
+
+    

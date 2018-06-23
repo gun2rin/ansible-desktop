@@ -1,0 +1,8 @@
+---
+- name: 'restart php-fpm'
+  become: true
+  become_user: 'root'
+  service:
+    name: 'php{{ php_version }}-fpm'
+    state: 'restarted'
+    enabled: yes

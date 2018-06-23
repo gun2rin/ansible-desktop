@@ -1,0 +1,22 @@
+---
+- name: 'add repository'
+  apt_repository:
+    repo: 'ppa:hda-me/nginx-stable'
+    update_cache: yes
+
+- name: 'install'
+  become: true
+  apt:
+    pkg: 'nginx,nginx-module-pagespeed'
+    state: 'latest'
+
+
+- name: 'create: /etc/nginx/nginx.conf'
+  become: true
+  template:
+    src: '{{ nginx_conf }}'
+    dest: '/etc/nginx/nginx.conf'
+
+- file:
+    path: /home/{{user}}/vhosts
+    state: directory

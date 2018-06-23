@@ -1,0 +1,28 @@
+---
+- hosts:  localhost
+  become: true
+  vars:
+    php_version: '7.2'
+    user: 'username'
+    user_home: '/home/username'
+    mysql_root_password: 'pass'
+    root_email: 'user@user.com'
+    timezone: 'Europe/Moscow'
+    nginx_conf: './roles/nginx/templates/nginx.conf'
+    php_fpm_pool_pm: 'static'
+    php_fpm_pool_max_children: '8'
+    php_fpm_pool_min_spare_servers: '1'
+    php_fpm_pool_max_spare_servers: '2'
+    php_fpm_pool_process_idle_timeout: '512s'
+    php_fpm_pool_max_requests: '256'
+    phpstorm_version: 2017.3
+    phpstorm_install_dir: /opt
+    phpstorm_bin: /usr/local/bin/phpstorm
+    nodejs_version: "9"
+  roles:
+     - soft
+     - mysql
+     - nginx
+     - mysql
+     - php-storm
+

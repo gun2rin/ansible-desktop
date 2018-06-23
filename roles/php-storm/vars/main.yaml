@@ -1,0 +1,5 @@
+---
+# vars file for phpstorm/
+phpstorm_version: 2017.3
+phpstorm_dir: "{{ phpstorm_install_dir }}/phpstorm-{{ phpstorm_version }}"
+phpstorm_archive: "{{ phpstorm_dir }}.tar.gz"

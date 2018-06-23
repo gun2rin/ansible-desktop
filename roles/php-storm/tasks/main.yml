@@ -1,0 +1,45 @@
+---
+- name: Get stat of phpstorm
+  stat:
+    path="{{ phpstorm_bin }}"
+  register: phpstorm_stat
+
+- name: Test if folder exist
+  stat:
+    path={{ phpstorm_dir }}
+  register: phpstorm_exist
+
+- name: Download PhpStorm archive for version {{ phpstorm_version }}
+  get_url:
+    url=http://download-cf.jetbrains.com/webide/PhpStorm-{{ phpstorm_version }}.tar.gz
+    dest={{ phpstorm_archive }}
+  when: phpstorm_exist.stat.exists == False
+
+- name: Decompress PhpStorm archive
+  unarchive:
+    src={{ phpstorm_archive }}
+    dest={{ phpstorm_install_dir }}
+    copy=no
+  when: phpstorm_exist.stat.exists == False
+
+- name: Move PhpStorm folder
+  shell:
+    mv {{ phpstorm_install_dir }}/PhpStorm-* {{ phpstorm_dir }}
+    creates="{{ phpstorm_dir }}"
+
+- name: Create symlink
+  file:
+    src={{ phpstorm_dir }}/bin/phpstorm.sh
+    dest={{ phpstorm_bin }}
+    state=link
+
+- name: Remove PhpStorm archive
+  file:
+    path={{ phpstorm_archive }}
+    state=absent
+
+- name: Create new application launcher
+  template: src=phpstorm.desktop.j2 dest=/usr/share/applications/phpstorm.desktop mode=0644
+
+- name: Set Inotify watches limit to 512K # See https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
+  sysctl: name="fs.inotify.max_user_watches" value=524288 sysctl_set=yes state=present reload=yes
