@@ -1,10 +1,4 @@
 ---
-- name: 'check installing'
-  become: true
-  stat:
-    path: '/root/.mysql_installing'
-  register: mysql_installing
-
 - name: 'specify root password'
   become: true
   become_user: 'root'
@@ -13,7 +7,7 @@
     question: 'mysql-server/root_password'
     value: '{{ mysql_root_password | quote }}'
     vtype: 'password'
-  when: mysql_installing.stat.exists == False
+  
 
 - name: 'confirm root password'
   become: true
@@ -23,10 +17,9 @@
     question: 'mysql-server/root_password_again'
     value: '{{ mysql_root_password | quote }}'
     vtype: 'password'
-  when: mysql_installing.stat.exists == False
+  
 
 - name: 'install'
   become: true
   apt:
     pkg: 'mysql-server,mysql-client,python-mysqldb,mysqltuner'
-  state: 'latest'

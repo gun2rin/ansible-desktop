@@ -1,0 +1,36 @@
+---
+- name: 'create: /home/{{ user }}/vhosts/adminer.conf'
+  become: true
+  template:
+    src: './roles/adminer/templates/adminer.conf'
+    dest: '/home/{{ user }}/vhosts/adminer.conf'
+    owner: '{{ user }}'
+    mode: 0775
+
+- file:
+    path: /home/{{user}}/www/adminer/web
+    state: directory
+    owner: '{{ user }}'
+    mode: 0775
+
+- name: 'get adminer'
+  get_url:
+    url: '{{ adminer_resource }}'
+    dest: /home/{{ user }}/www/adminer/web/index.php
+    owner: '{{ user }}'
+    mode: 0775
+
+- name: 'write localhost adminer'
+  lineinfile:
+      path: /etc/hosts
+      insertafter: '^127.0.0.1	localhost'
+      line: "127.0.0.1    adminer.local"
+
+
+- name: 'restart nginx'
+  become: true
+  become_user: 'root'
+  service:
+    name: 'nginx'
+    state: 'restarted'
+    enabled: yes

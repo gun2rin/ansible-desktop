@@ -20,7 +20,6 @@
           - 'sqlite3'
           - 'language-pack-en'
           - 'language-pack-ru'
-          - 'python-software-properties'
           - 'software-properties-common'
           - 'ruby-compass'
           - 'memcached'
@@ -31,29 +30,21 @@
           - 'jp2a'
           - 'mc'
           - 'gnome-disk-utility'
+          - 'gimp'
       become: yes
-      update_cache: yes 
-    
-    - name: 'add repos'
+          
+    - name: 'add ppa repos'
       apt_repository:
          repo: '{{ item }}'
       with_items:
-             - 'ppa:shutter/ppa'
-             - 'ppa:deluge-team/ppa'
-             - 'ppa:mystic-mirage/komodo-edit'
-             - 'ppa:inkscape.dev/stable'
              - 'ppa:peek-developers/stable'
-             - 'ppa:otto-kesselgulasch/gimp'
-             - 'ppa:x2go/stable' 
       become: yes
-      update_cache: yes
+    
 
-    - name: 'repos install'
+    - name: 'ppa repos install'
       apt:
-        pkg: 'shutter,deluge,komodo-edit,inkscape,peek,gimp,x2goclient,x2goserver-xsession'
-        state: 'latest'     
-      update_cache: yes   
-
+        pkg: 'peek'
+        state: 'latest'
 
     - name: 'install desktop packages'
       apt:
@@ -68,7 +59,9 @@
           - 'freerdp-x11'
           - 'lame'
           - 'libdvdread4'
+          - 'shutter'
           - 'mplayer'
+          - 'inkscape'
           - 'remmina'
           - 'remmina-plugin-rdp'
           - 'remmina-plugin-vnc'
@@ -80,10 +73,7 @@
           - 'youtube-dl'
           - 'xtrlock'
           - 'ppa-purge'
-      update_cache: yes
-    
-     
-    
+ 
     - name: Install skype
       apt:
           deb: https://go.skype.com/skypeforlinux-64.deb  
@@ -92,10 +82,7 @@
       apt:
          pkg: 'git,git-extras,git-flow,composer,openssh-server'
          state: 'latest'
-      update_cache: yes
-
-
-     
+           
       
     - name: "apt | ensure Google linux signing key present"
       apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
@@ -105,8 +92,8 @@
           repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
           filename: "google-chrome"
           state: present
-      update_cache: yes  
-    
+      
+
     - name: "apt | ensure Google chrome present"
       apt:
         name: "google-chrome-stable"
@@ -122,7 +109,6 @@
       apt_repository:
         repo: "deb https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
         state: present
-      update_cache: yes
       become: yes
 
     - name: Install the nodejs

@@ -2,12 +2,12 @@
 - name: 'add repository'
   apt_repository:
     repo: 'ppa:hda-me/nginx-stable'
-    update_cache: yes
+    
 
 - name: 'install'
   become: true
   apt:
-    pkg: 'nginx,nginx-module-pagespeed'
+    pkg: 'nginx'
     state: 'latest'
 
 
@@ -20,3 +20,11 @@
 - file:
     path: /home/{{user}}/vhosts
     state: directory
+    owner: '{{ user }}'
+    mode: 0775
+
+- file:
+    path: /home/{{user}}/www
+    state: directory
+    owner: '{{ user }}'
+    mode: 0775

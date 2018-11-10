@@ -1,9 +1,9 @@
-**Ansible playbook for Ubuntu 64bit**
+**Ansible 2.7 playbook for Ubuntu 64bit**
 =========
 
 Simple playbook for Compo developers desktops.
 Installs nginx, php-fpm, mysql, node.js, python, bower, gulp, angular-cli, composer, Komodo, PhpStorm, Gimp, Peek, 
-Inkscape, Deluge, x2go, shutter, skype, google-chrome, remmina and some libraries.
+Inkscape, skype, google-chrome and some libraries.
 
 `git clone git@github.com:gun2rin/ansible-desktop.git`
 
@@ -23,6 +23,7 @@ Edit **desktop.yaml**. Specify your settings like php version, username, db pass
 **Play it**
 
 ```sh
+cd ansible-desktop
 sudo ansible-playbook desktop.yaml
 ```
 

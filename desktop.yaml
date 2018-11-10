@@ -3,12 +3,17 @@
   become: true
   vars:
     php_version: '7.2'
-    user: 'username'
-    user_home: '/home/username'
+    
+    #set your linux username
+    user: 'user'
+    user_home: '/home/{{ user }}'
+
+    #set your local mysql pass
     mysql_root_password: 'pass'
     root_email: 'user@user.com'
     timezone: 'Europe/Moscow'
     nginx_conf: './roles/nginx/templates/nginx.conf'
+    adminer_resource: 'https://github.com/vrana/adminer/releases/download/v4.6.3/adminer-4.6.3.php'
     php_fpm_pool_pm: 'static'
     php_fpm_pool_max_children: '8'
     php_fpm_pool_min_spare_servers: '1'
@@ -23,6 +28,7 @@
      - soft
      - mysql
      - nginx
-     - mysql
+     - php
+     - adminer
      - php-storm
 
