@@ -3,9 +3,9 @@
   become: true
   vars:
     php_version: '7.4'
-    
+
     #set your linux username
-    user: 'ubuntu'
+    user: 'user'
     user_home: '/home/{{ user }}'
 
     #set your local mysql pass
@@ -25,10 +25,10 @@
     phpstorm_bin: /usr/local/bin/phpstorm
     nodejs_version: "12.16"
   roles:
-     - soft
-     - mysql
-     - nginx
-     - php
-     - adminer
-     - php-storm
+    - soft
+    - mysql
+    - nginx
+    - php
+    - adminer
+    - php-storm
 

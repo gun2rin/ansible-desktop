@@ -1,144 +1,143 @@
 ---
-    - name: 'install main packages'
-      apt:
-          pkg: 
-            [  
-           'python',
-           'openjdk-11-jdk',
-           'fail2ban',
-           'supervisor',
-           'bc',
-           'nano',
-           'unzip',
-           'curl',
-           'wget',
-           'whois',
-           'npm',
-           'snapd',
-           'snapd-xdg-open',
-           'apt-transport-https',
-           'sqlite3',
-           'language-pack-en',
-           'language-pack-ru',
-           'software-properties-common',
-           'memcached',
-           'sendmail',
-           'sendemail',
-           'mailutils',
-           'ruby',
-           'jp2a',
-           'mc',
-           'gnome-disk-utility',
-           'gimp'
-            ]
-          state: 'latest'
-       
-      become: yes
-          
-    - name: 'add peek ppa repos'
-      apt_repository:
-         repo: 'ppa:peek-developers/stable'
-         update_cache: no
-      become: yes
-    
-    - name: 'add peek ppa repos'
-      apt_repository:
-         repo: 'ppa:shutter/ppa'
-         update_cache: no
-      become: yes
+- name: 'install main packages'
+  apt:
+    pkg:
+      [
+        'python',
+        'openjdk-11-jdk',
+        'fail2ban',
+        'supervisor',
+        'bc',
+        'nano',
+        'unzip',
+        'curl',
+        'wget',
+        'whois',
+        'npm',
+        'snapd',
+        'snapd-xdg-open',
+        'apt-transport-https',
+        'sqlite3',
+        'language-pack-en',
+        'language-pack-ru',
+        'software-properties-common',
+        'memcached',
+        'sendmail',
+        'sendemail',
+        'mailutils',
+        'ruby',
+        'jp2a',
+        'mc',
+        'gnome-disk-utility',
+        'gimp'
+      ]
+    state: 'latest'
+
+  become: yes
+
+- name: 'add peek ppa repos'
+  apt_repository:
+    repo: 'ppa:peek-developers/stable'
+    update_cache: no
+  become: yes
+
+- name: 'add peek ppa repos'
+  apt_repository:
+    repo: 'ppa:shutter/ppa'
+    update_cache: no
+  become: yes
 
 
 
-    - name: 'ppa repos install'
-      apt:
-        pkg: 'peek'
-        state: 'latest'
+- name: 'ppa repos install'
+  apt:
+    pkg: 'peek'
+    state: 'latest'
 
-    - name: 'install desktop packages'
-      apt:
-         pkg: [
-                 'chromium-codecs-ffmpeg',
-           'ffmpeg',
-           'firefox',
-           'flashplugin-installer',
-           'fonts-ubuntu-font-family-console',
-           'lame',
-           'mplayer',
-           'inkscape',
-           'remmina',
-           'remmina-plugin-rdp',
-           'remmina-plugin-vnc',
-           'ttf-ubuntu-font-family',
-           'transmission-gtk',
-           'ubuntu-restricted-extras',
-           'telegram-desktop',
-           'unrar',
-           'vlc',
-           'youtube-dl',
-           'xtrlock',
-           'ppa-purge'
- 
-              ]
-         state: 'latest'
-
-          
-    - name: Install skype
-      apt:
-          deb: https://go.skype.com/skypeforlinux-64.deb  
-      
-    - name: 'install server packages'
-      apt:
-         pkg: 'git,git-extras,git-flow,composer,openssh-server'
-         state: 'latest'
-           
-      
-    - name: "apt | ensure Google linux signing key present"
-      apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
-    
-    - name: 'apt | ensure Google chrome repo present'
-      apt_repository:
-          repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
-          filename: "google-chrome"
-          state: present
-          update_cache: no          
-
-    - name: "apt | ensure Google chrome present"
-      apt:
-        name: "google-chrome-stable"
-        state: present  
+- name: 'install desktop packages'
+  apt:
+    pkg: [
+      'chromium-codecs-ffmpeg',
+      'ffmpeg',
+      'firefox',
+      'flashplugin-installer',
+      'fonts-ubuntu-font-family-console',
+      'lame',
+      'mplayer',
+      'inkscape',
+      'remmina',
+      'remmina-plugin-rdp',
+      'remmina-plugin-vnc',
+      'ttf-ubuntu-font-family',
+      'transmission-gtk',
+      'ubuntu-restricted-extras',
+      'telegram-desktop',
+      'unrar',
+      'vlc',
+      'youtube-dl',
+      'xtrlock',
+      'ppa-purge'
+      ]
+    state: 'latest'
 
 
-    - name: Install the gpg key for nodejs LTS
-      apt_key:
-        url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
-        state: present
+- name: Install skype
+  apt:
+    deb: https://go.skype.com/skypeforlinux-64.deb
 
-    - name: Install the nodejs LTS repos
-      apt_repository:
-        repo: "deb https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
-        update_cache: no
-        state: present
-      become: yes
+- name: 'install server packages'
+  apt:
+    pkg: 'git,git-extras,git-flow,composer,openssh-server'
+    state: 'latest'
 
-    - name: Install the nodejs
-      apt:
-        name: nodejs
-        state: present
-      become: yes
-    
-    - name: 'node packages'
-      npm:
-          name: '{{ item }}'
-          global: yes
-      with_items:
-         - '@angular/cli'
-      become: yes
 
-    - name: Install snap packages
-      snap:
-       name:
-        - discord    
-        - docker
-        - insomnia
-        - slack
-       classic: yes
+- name: "apt | ensure Google linux signing key present"
+  apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
+
+- name: 'apt | ensure Google chrome repo present'
+  apt_repository:
+    repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+    filename: "google-chrome"
+    state: present
+    update_cache: no
+
+- name: "apt | ensure Google chrome present"
+  apt:
+    name: "google-chrome-stable"
+    state: present
+
+
+- name: Install the gpg key for nodejs LTS
+  apt_key:
+    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+    state: present
+
+- name: Install the nodejs LTS repos
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
+    update_cache: no
+    state: present
+  become: yes
+
+- name: Install the nodejs
+  apt:
+    name: nodejs
+    state: present
+  become: yes
+
+- name: 'node packages'
+  npm:
+    name: '{{ item }}'
+    global: yes
+  with_items:
+    - '@angular/cli'
+  become: yes
+
+- name: Install snap packages
+  snap:
+    name:
+      - discord
+      - docker
+      - insomnia
+      - slack
+    classic: yes
