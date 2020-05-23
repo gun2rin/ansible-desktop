@@ -1,45 +1,53 @@
 ---
     - name: 'install main packages'
       apt:
-          pkg: '{{ item }}'
+          pkg: 
+            [  
+           'python',
+           'openjdk-11-jdk',
+           'fail2ban',
+           'supervisor',
+           'bc',
+           'nano',
+           'unzip',
+           'curl',
+           'wget',
+           'whois',
+           'npm',
+           'snapd',
+           'snapd-xdg-open',
+           'apt-transport-https',
+           'sqlite3',
+           'language-pack-en',
+           'language-pack-ru',
+           'software-properties-common',
+           'memcached',
+           'sendmail',
+           'sendemail',
+           'mailutils',
+           'ruby',
+           'jp2a',
+           'mc',
+           'gnome-disk-utility',
+           'gimp'
+            ]
           state: 'latest'
-
-      with_items:
-          - 'python'
-          - 'python-pip'
-          - 'openjdk-8-jre'
-          - 'fail2ban'
-          - 'supervisor'
-          - 'bc'
-          - 'nano'
-          - 'unzip'
-          - 'curl'
-          - 'wget'
-          - 'whois'
-          - 'apt-transport-https'
-          - 'sqlite3'
-          - 'language-pack-en'
-          - 'language-pack-ru'
-          - 'software-properties-common'
-          - 'ruby-compass'
-          - 'memcached'
-          - 'sendmail'
-          - 'sendemail'
-          - 'mailutils'
-          - 'ruby'
-          - 'jp2a'
-          - 'mc'
-          - 'gnome-disk-utility'
-          - 'gimp'
+       
       become: yes
           
-    - name: 'add ppa repos'
+    - name: 'add peek ppa repos'
       apt_repository:
-         repo: '{{ item }}'
-      with_items:
-             - 'ppa:peek-developers/stable'
+         repo: 'ppa:peek-developers/stable'
+         update_cache: no
       become: yes
     
+    - name: 'add peek ppa repos'
+      apt_repository:
+         repo: 'ppa:shutter/ppa'
+         update_cache: no
+      become: yes
+
+
 
     - name: 'ppa repos install'
       apt:
@@ -48,32 +56,32 @@
 
     - name: 'install desktop packages'
       apt:
-         pkg: '{{ item }}'
-         state: 'latest'
-      with_items:
-          - 'chromium-codecs-ffmpeg'
-          - 'ffmpeg'
-          - 'firefox'
-          - 'flashplugin-installer'
-          - 'fonts-ubuntu-font-family-console'
-          - 'freerdp-x11'
-          - 'lame'
-          - 'libdvdread4'
-          - 'shutter'
-          - 'mplayer'
-          - 'inkscape'
-          - 'remmina'
-          - 'remmina-plugin-rdp'
-          - 'remmina-plugin-vnc'
-          - 'ttf-ubuntu-font-family'
-          - 'transmission-gtk'
-          - 'ubuntu-restricted-extras'
-          - 'unrar'
-          - 'vlc'
-          - 'youtube-dl'
-          - 'xtrlock'
-          - 'ppa-purge'
+         pkg: [
+                 'chromium-codecs-ffmpeg',
+           'ffmpeg',
+           'firefox',
+           'flashplugin-installer',
+           'fonts-ubuntu-font-family-console',
+           'lame',
+           'mplayer',
+           'inkscape',
+           'remmina',
+           'remmina-plugin-rdp',
+           'remmina-plugin-vnc',
+           'ttf-ubuntu-font-family',
+           'transmission-gtk',
+           'ubuntu-restricted-extras',
+           'telegram-desktop',
+           'unrar',
+           'vlc',
+           'youtube-dl',
+           'xtrlock',
+           'ppa-purge'
  
+              ]
+         state: 'latest'
+
+          
     - name: Install skype
       apt:
           deb: https://go.skype.com/skypeforlinux-64.deb  
@@ -92,7 +100,7 @@
           repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
           filename: "google-chrome"
           state: present
-      
+          update_cache: no          
 
     - name: "apt | ensure Google chrome present"
       apt:
@@ -108,6 +116,7 @@
     - name: Install the nodejs LTS repos
       apt_repository:
         repo: "deb https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
+        update_cache: no
         state: present
       become: yes
 
@@ -122,10 +131,14 @@
           name: '{{ item }}'
           global: yes
       with_items:
-         - 'bower'
-         - 'uglify-js'
-         - 'gulp'
          - '@angular/cli'
       become: yes
 
-    
+    - name: Install snap packages
+      snap:
+       name:
+        - discord    
+        - docker
+        - insomnia
+        - slack
+       classic: yes

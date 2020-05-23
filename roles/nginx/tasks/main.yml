@@ -2,7 +2,7 @@
 - name: 'add repository'
   apt_repository:
     repo: 'ppa:hda-me/nginx-stable'
-    
+    update_cache: no
 
 - name: 'install'
   become: true

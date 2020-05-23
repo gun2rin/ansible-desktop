@@ -2,10 +2,10 @@
 - hosts:  localhost
   become: true
   vars:
-    php_version: '7.2'
+    php_version: '7.4'
     
     #set your linux username
-    user: 'user'
+    user: 'ubuntu'
     user_home: '/home/{{ user }}'
 
     #set your local mysql pass
@@ -13,17 +13,17 @@
     root_email: 'user@user.com'
     timezone: 'Europe/Moscow'
     nginx_conf: './roles/nginx/templates/nginx.conf'
-    adminer_resource: 'https://github.com/vrana/adminer/releases/download/v4.6.3/adminer-4.6.3.php'
+    adminer_resource: 'https://github.com/vrana/adminer/releases/download/v4.7.7/adminer-4.7.7-en.php'
     php_fpm_pool_pm: 'static'
     php_fpm_pool_max_children: '8'
     php_fpm_pool_min_spare_servers: '1'
     php_fpm_pool_max_spare_servers: '2'
     php_fpm_pool_process_idle_timeout: '512s'
     php_fpm_pool_max_requests: '256'
-    phpstorm_version: 2017.3
+    phpstorm_version: 2020.1
     phpstorm_install_dir: /opt
     phpstorm_bin: /usr/local/bin/phpstorm
-    nodejs_version: "9"
+    nodejs_version: "12.16"
   roles:
      - soft
      - mysql

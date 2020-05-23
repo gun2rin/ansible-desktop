@@ -3,7 +3,7 @@
   become: true
   apt_repository:
     repo: 'ppa:ondrej/php'
-    update_cache: yes
+    update_cache: no
     
    
 - name: 'install php7'

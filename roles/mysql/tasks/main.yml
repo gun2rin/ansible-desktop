@@ -22,4 +22,4 @@
 - name: 'install'
   become: true
   apt:
-    pkg: 'mysql-server,mysql-client,python-mysqldb,mysqltuner'
+    pkg: 'mysql-server,mysql-client,mysqltuner'

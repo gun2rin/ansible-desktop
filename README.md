@@ -1,8 +1,8 @@
-**Ansible 2.7 playbook for Ubuntu 64bit**
+**Ansible 2.9.6 playbook for Ubuntu 20.04 64bit**
 =========
 
 Simple playbook for Compo developers desktops.
-Installs nginx, php-fpm, mysql, node.js, python, bower, gulp, angular-cli, composer, Komodo, PhpStorm, Gimp, Peek, 
+Installs nginx, php-fpm, mysql, node.js, python, angular-cli, composer, Komodo, PhpStorm, Gimp, Peek, 
 Inkscape, skype, google-chrome and some libraries.
 
 `git clone git@github.com:gun2rin/ansible-desktop.git`
@@ -10,13 +10,9 @@ Inkscape, skype, google-chrome and some libraries.
 **Ansible installation.**
 
 ```sh
- sudo apt-get update
- sudo apt-get install software-properties-common
- sudo apt-add-repository ppa:ansible/ansible
- sudo apt-get update
- sudo apt-get install ansible
+ sudo apt install ansible
  ```
-https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-apt-ubuntu 
+https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu
  
 Edit **desktop.yaml**. Specify your settings like php version, username, db pass etc. if necessary.
  
