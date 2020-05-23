@@ -90,23 +90,6 @@
     pkg: 'git,git-extras,git-flow,composer,openssh-server'
     state: 'latest'
 
-
-- name: "apt | ensure Google linux signing key present"
-  apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
-
-- name: 'apt | ensure Google chrome repo present'
-  apt_repository:
-    repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
-    filename: "google-chrome"
-    state: present
-    update_cache: no
-
-- name: "apt | ensure Google chrome present"
-  apt:
-    name: "google-chrome-stable"
-    state: present
-
-
 - name: Install the gpg key for nodejs LTS
   apt_key:
     url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
@@ -123,14 +106,6 @@
   apt:
     name: nodejs
     state: present
-  become: yes
-
-- name: 'node packages'
-  npm:
-    name: '{{ item }}'
-    global: yes
-  with_items:
-    - '@angular/cli'
   become: yes
 
 - name: Install snap packages
